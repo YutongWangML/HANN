@@ -52,5 +52,7 @@ python run_alg_on_dataset.py --algorithm ALGORITHM --dataset DATASET
     f.write(SLURM_script)
     f.close()
 
+
     cmd = 'sbatch job.slurm'  
     os.system(cmd)
+    

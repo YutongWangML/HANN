@@ -13,6 +13,7 @@ from tensorflow.keras import layers
 from sklearn import datasets
 import numpy as np
 import larq as lq
+import time
 
 
 global_vars = {}
@@ -260,8 +261,7 @@ def run(hparam_idx,hparam):
 
     val_acc_sm = 0
 
-#     for i in range(500):
-    for i in range(5):
+    for i in range(500):
         history = run_model_fitting(model,epochs=10)
 
         val_acc = np.mean(history.history['val_' + acc_name])
@@ -322,12 +322,14 @@ class HANN():
         global_vars['X_test'] = X_test
         global_vars['y_test'] = y_test
 
+        start = time.perf_counter()
         pool = Pool()
         pool.starmap(run, enumerate(hparams))
 
         pool.close()
         pool.join()
-
+        time_elapsed = time.perf_counter() - start
+        s_print("TME " + str(time_elapsed))
                 
         return None
 
