@@ -35,6 +35,20 @@ def predict_classes_from_r_margin(z):
 
 
 
+def get_label_manipulators(loss_func, n_classes):
+    if loss_func == "OCE":
+        label_encoder = lambda x: to_categorical(x, num_classes = n_classes)
+        label_decoder = lambda x: tf.math.argmax(x,axis=-1)
+        label_predictor = label_decoder
+        acc_name = "categorical_accuracy"
+    else:
+        label_encoder = lambda x : to_t_categorical(x, num_classes = n_classes)
+        label_decoder = from_t_categorical
+        label_predictor = predict_classes_from_r_margin
+        acc_name = "accuracy"
+    return label_encoder, label_decoder, label_predictor, acc_name
+
+
 # def from_t_categorical(y):
 #     """ convert trimmed categorical label encodings to raw labels
 #     """

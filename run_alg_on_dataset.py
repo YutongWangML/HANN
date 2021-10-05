@@ -7,6 +7,7 @@ import UCI_classification.datasets as datasets
 import numpy as np
 import os
 import timeit
+import pickle
 
 
 
@@ -44,6 +45,10 @@ if __name__ == '__main__':
     n_classes = len(np.unique(np.array(y_train)))
     good_cv_folds = [(train,val) for train,val in cv_folds if len(np.unique(np.array(y_train[train]))) == n_classes]
     
-    
+    result_filename = "/home/yutongw/HANN/results/ALGORITHM/DATASET.pkl"
+    result_filename = result_filename.replace("DATASET", dataset_name).replace("ALGORITHM", algorithm_name)
+
     mod = importlib.import_module("algorithms."+algorithm_name)
-    mod.clf.fit(X_train, y_train, X_test, y_test, cv_folds = good_cv_folds)
+    results = mod.clf.fit(X_train, y_train, X_test, y_test, cv_folds = good_cv_folds)
+    with open(result_filename, 'wb') as handle:
+        pickle.dump(results, handle)

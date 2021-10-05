@@ -10,7 +10,7 @@ parser.add_argument('--datalist',
 
 parser.add_argument('--algorithm',
                     type = str,
-                    help = 'Algorithm name, e.g., "HANN". See "algorithms/" directory.')
+                    help = 'Algorithm name, e.g., "HANN15OCE". See "algorithms/" directory.')
 
 parser.add_argument('--cpus',
                     type = int, 
@@ -36,19 +36,19 @@ for dataset in datalist:
     SLURM_script = """#!/bin/bash
 # The interpreter used to execute the script
 #SBATCH --job-name=JOBNAME
-#SBATCH --mail-user=yutongw@umich.edu
+#SBATCH --mail-user=YOUR_EMAIL
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --cpus-per-task=NCPUS
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem-per-cpu=1000m 
 #SBATCH --time=01-00:00:00
-#SBATCH --account=clayscot0
+#SBATCH --account=YOUR_ACCOUNT
 #SBATCH --partition=standard
-#SBATCH --output=/home/yutongw/HANN/results/ALGORITHM/DATASET.out
+#SBATCH --output=COMPLETE_DIRECTORY_TO_HANN/results/ALGORITHM/DATASET.out
 # The application(s) to execute along with its input arguments and options:
 module load tensorflow/2.5.0
-cd /home/yutongw/HANN/
+cd COMPLETE_DIRECTORY_TO_HANN/HANN/
 python run_alg_on_dataset.py --algorithm ALGORITHM --dataset DATASET
     """
     SLURM_script = SLURM_script.replace("JOBNAME", jobname)\
