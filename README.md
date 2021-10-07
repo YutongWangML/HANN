@@ -1,6 +1,6 @@
 # HANN
 
-Repository for the paper [insert link here].
+Repository for our preprint [VC dimension of partially quantized neural networks in the overparametrized regime](https://arxiv.org/abs/2110.02456).
 
 This repo is ran with the following software (versions)
 ```
